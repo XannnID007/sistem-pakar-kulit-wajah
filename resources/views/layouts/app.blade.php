@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sistem Pakar KIPI</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome (di <head>) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         * {
@@ -129,6 +130,7 @@
         .illustration {
             margin-top: 30px;
         }
+
         footer {
             background-color: rgb(4, 95, 107);
             color: white;
@@ -141,33 +143,36 @@
         }
     </style>
 </head>
+
 <body>
 
-<nav>
-    <div class="nav-left">
-        Sistem Pakar KIPI
-    </div>
-    <div class="nav-right">
-        @auth
-            <span>{{ Auth::user()->name }}</span>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline-flex; align-items: center;">
-                @csrf
-                <button type="submit">Logout</button>
-            </form>
-        @else
-            <a href="{{ route('login') }}">Login</a>
-            <a href="{{ route('register.form') }}">Register</a>
-        @endauth
-    </div>
-</nav>
+    <nav>
+        <div class="nav-left">
+            Klinik Marisa
+        </div>
+        <div class="nav-right">
+            @auth
+                <span>{{ Auth::user()->name }}</span>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                    style="display: inline-flex; align-items: center;">
+                    @csrf
+                    <button type="submit">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+                <a href="{{ route('register.form') }}">Register</a>
+            @endauth
+        </div>
+    </nav>
 
-<main>
-    @yield('content')
-</main>
+    <main>
+        @yield('content')
+    </main>
 
-<footer>
-    Sistem Pakar Diagnosa Penyebab kulit wajah © 2025
-</footer>
+    <footer>
+        Sistem Pakar Diagnosa Penyebab kulit wajah © 2025
+    </footer>
 
 </body>
+
 </html>
