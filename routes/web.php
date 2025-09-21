@@ -33,12 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/pakar', function () {
         return view('pakar.dashboard');
     })->middleware(CheckRole::class . ':pakar')->name('pakar.dashboard');
-    
+
     // Dashboard pengguna
     Route::get('/dashboard/user', function () {
         return view('user.dashboard');
     })->middleware(CheckRole::class . ':pengguna')->name('dashboard.user');
-    
 });
 
 use App\Http\Controllers\DiagnosisController;
@@ -70,6 +69,49 @@ Route::middleware('auth')->group(function () {
         ->name('diagnosa.ulang');
 });
 
+use App\Http\Controllers\KonsultasiController;
+
+// Routes untuk konsultasi user
+Route::middleware('auth')->group(function () {
+    // Form permintaan konsultasi
+    Route::get('/konsultasi/create', [KonsultasiController::class, 'create'])
+        ->name('konsultasi.create');
+
+    // Simpan permintaan konsultasi
+    Route::post('/konsultasi', [KonsultasiController::class, 'store'])
+        ->name('konsultasi.store');
+
+    // Status konsultasi
+    Route::get('/konsultasi/{id}/status', [KonsultasiController::class, 'status'])
+        ->name('konsultasi.status');
+
+    // Daftar konsultasi user
+    Route::get('/konsultasi', [KonsultasiController::class, 'userKonsultasi'])
+        ->name('konsultasi.user');
+});
+
+// Routes untuk pakar konsultasi
+Route::middleware(['auth', CheckRole::class . ':pakar'])->prefix('pakar')->name('pakar.')->group(function () {
+    // Daftar konsultasi untuk pakar
+    Route::get('/konsultasi', [KonsultasiController::class, 'pakarIndex'])
+        ->name('konsultasi.index');
+
+    // Detail konsultasi
+    Route::get('/konsultasi/{id}', [KonsultasiController::class, 'pakarShow'])
+        ->name('konsultasi.show');
+
+    // Konfirmasi konsultasi
+    Route::post('/konsultasi/{id}/konfirmasi', [KonsultasiController::class, 'pakarKonfirmasi'])
+        ->name('konsultasi.konfirmasi');
+
+    // Selesaikan konsultasi
+    Route::post('/konsultasi/{id}/selesai', [KonsultasiController::class, 'pakarSelesai'])
+        ->name('konsultasi.selesai');
+
+    // Batalkan konsultasi
+    Route::post('/konsultasi/{id}/batal', [KonsultasiController::class, 'pakarBatal'])
+        ->name('konsultasi.batal');
+});
 
 use App\Http\Controllers\PakarController;
 
@@ -77,19 +119,18 @@ Route::get('pakar/user', [PakarController::class, 'user'])->name('pakar.user');
 Route::get('/dashboard/pakar', [PakarController::class, 'dashboard'])->name('pakar.dashboard');
 Route::resource('pakar/pakar', PakarController::class)->except(['show']);
 
-
 use App\Http\Controllers\PenyebabController;
 
 Route::prefix('pakar')->name('pakar.')->group(function () {
     Route::resource('penyebab', PenyebabController::class);
 });
 
-
 use App\Http\Controllers\KategoriKipiController;
 
 Route::prefix('pakar')->name('pakar.')->group(function () {
     Route::resource('kategori_kipi', KategoriKipiController::class);
 });
+
 use App\Http\Controllers\PengetahuanController;
 
 Route::prefix('pakar')->name('pakar.')->group(function () {
@@ -98,17 +139,9 @@ Route::prefix('pakar')->name('pakar.')->group(function () {
     Route::post('/pengetahuan', [PengetahuanController::class, 'store'])->name('pengetahuan.store');
     Route::resource('pengetahuan', PengetahuanController::class)->except(['show']);
 });
+
 use App\Http\Controllers\PermasalahanKulitController;
 
 Route::prefix('pakar')->name('pakar.')->group(function () {
     Route::resource('permasalahan_kulit', PermasalahanKulitController::class);
 });
-
-
-
-
-
-
-
-
-

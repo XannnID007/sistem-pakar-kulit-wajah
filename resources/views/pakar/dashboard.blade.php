@@ -1,43 +1,72 @@
 @extends('layouts.pakar')
 
 @section('content')
-<div class="container py-4">
-    <h3 class="mb-4 fw-bold"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</h3>
-
-    <div class="card shadow-sm border-0 rounded-3">
-        <div class="card-header bg-light">
-            <h5 class="mb-0"><i class="fas fa-table me-2"></i> Ringkasan Data</h5>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th style="width: 5%">No</th>
-                            <th>Item</th>
-                            <th class="text-end">Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><i class="fas fa-virus me-2 text-muted"></i> Penyebab</td>
-                            <td class="text-end fw-bold">{{ $jumlahPenyebab }}</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><i class="fas fa-list-alt me-2 text-muted"></i> Permasalahan Kulit</td>
-                            <td class="text-end fw-bold">{{ $jumlahPermasalahan }}</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><i class="fas fa-book-medical me-2 text-muted"></i> Data Pengetahuan</td>
-                            <td class="text-end fw-bold">{{ $jumlahPengetahuan }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Header Section -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold text-dark mb-0">
+                        <i class="fas fa-user-md me-2 text-primary"></i>
+                        Manajemen Konsultasi
+                    </h3>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <style>
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        .btn-group-sm>.btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .modal-header.bg-success,
+        .modal-header.bg-danger,
+        .modal-header.bg-info {
+            border-bottom: none;
+        }
+
+        .btn-close-white {
+            filter: brightness(0) invert(1);
+        }
+    </style>
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const toast = document.createElement('div');
+                toast.className =
+                    'toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3';
+                toast.setAttribute('role', 'alert');
+                toast.style.zIndex = '9999';
+                toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i>
+                    {{ session('success') }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+                document.body.appendChild(toast);
+
+                const bsToast = new bootstrap.Toast(toast, {
+                    autohide: true,
+                    delay: 5000
+                });
+                bsToast.show();
+
+                toast.addEventListener('hidden.bs.toast', function() {
+                    toast.remove();
+                });
+            });
+        </script>
+    @endif
 @endsection

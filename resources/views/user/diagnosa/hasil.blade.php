@@ -182,11 +182,13 @@
             padding: 2rem;
             background: #f8f9fa;
             border-top: 1px solid #e9ecef;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .btn-diagnosa-ulang {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+        .btn-action {
             padding: 1rem 2rem;
             border-radius: 50px;
             text-decoration: none;
@@ -197,11 +199,22 @@
             transition: all 0.3s ease;
             border: none;
             font-size: 1.1rem;
+            cursor: pointer;
         }
 
-        .btn-diagnosa-ulang:hover {
+        .btn-diagnosa-ulang {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-konsultasi {
+            background: linear-gradient(45deg, #10b981, #34d399);
+            color: white;
+        }
+
+        .btn-action:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             color: white;
             text-decoration: none;
         }
@@ -249,6 +262,15 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 0.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -380,9 +402,13 @@
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <a href="{{ route('diagnosa.ulang') }}" class="btn-diagnosa-ulang">
+                    <a href="{{ route('diagnosa.ulang') }}" class="btn-action btn-diagnosa-ulang">
                         <i class="fas fa-redo-alt"></i>
                         Diagnosa Ulang
+                    </a>
+                    <a href="{{ route('konsultasi.create') }}" class="btn-action btn-konsultasi">
+                        <i class="fas fa-user-md"></i>
+                        Konsultasi dengan Pakar
                     </a>
                 </div>
             </div>
